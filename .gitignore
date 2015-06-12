@@ -1,0 +1,13 @@
+
+/dist
+
+
+# lychee and sorbet
+/lychee/build/*
+/sorbet/.pid
+/sorbet/build/*
+
+
+# Well, yeah. Fuck these guys
+.DS_Store
+

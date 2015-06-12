@@ -1,0 +1,57 @@
+{
+	"build": {
+		"environments": {
+			"iojs/main": {
+				"build": "sorbet.Main",
+				"debug": false,
+				"sandbox": false,
+				"packages": [
+					[
+						"sorbet",
+						"./lychee.pkg"
+					]
+				],
+				"tags": {
+					"platform": [
+						"iojs"
+					]
+				},
+				"variant": "application"
+			}
+		},
+		"files": {}
+	},
+	"source": {
+		"environments": {},
+		"tags": {},
+		"files": {
+			"data": {
+				"Host": [
+					"js"
+				],
+				"Filesystem": [
+					"js"
+				]
+			},
+			"net": {
+				"Remote": [
+					"js"
+				],
+				"Server": [
+					"js"
+				]
+			},
+			"serve": {
+				"File": [
+					"js"
+				],
+				"Redirect": [
+					"js"
+				]
+			},
+			"Main": [
+				"js"
+			]
+		}
+	}
+}

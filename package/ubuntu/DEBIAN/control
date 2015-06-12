@@ -1,0 +1,10 @@
+Package: sorbet
+Version: __VERSION__
+Section: devel
+Priority: optional
+Architecture: __ARCH__
+Installed-Size: __SIZE__
+Depends: curl
+Maintainer: The lycheeJS Team <lycheejs@gmail.com>
+Description: HTTP/1.1 compliant multiplexed multi-host multi-socket multi-instance webserver using iojs
+

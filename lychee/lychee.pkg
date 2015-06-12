@@ -1,0 +1,93 @@
+{
+	"build": {
+		"environments": {},
+		"files": {
+			"iojs": {
+				"core": [
+					"js"
+				],
+				"main": [
+					"js"
+				]
+			}
+		}
+	},
+	"source": {
+		"environments": {},
+		"tags": {
+			"platform": {
+				"iojs": "platform/iojs"
+			}
+		},
+		"files": {
+			"platform": {
+				"iojs": {
+					"bootstrap": [
+						"js"
+					],
+					"Storage": [
+						"js"
+					]
+				}
+			},
+			"core": {
+				"lychee": [
+					"js"
+				],
+				"Asset": [
+					"js"
+				],
+				"Debugger": [
+					"js"
+				],
+				"Definition": [
+					"js"
+				],
+				"Environment": [
+					"js"
+				],
+				"Package": [
+					"js"
+				]
+			},
+			"data": {
+				"BENCODE": [
+					"js"
+				],
+				"BitON": [
+					"js"
+				],
+				"JSON": [
+					"js"
+				]
+			},
+			"event": {
+				"Emitter": [
+					"js"
+				],
+				"Flow": [
+					"js"
+				],
+				"Promise": [
+					"js"
+				],
+				"Queue": [
+					"js"
+				]
+			},
+			"net": {
+				"Service": [
+					"js"
+				],
+				"Tunnel": [
+					"js"
+				],
+				"protocol": {
+					"HTTP": [
+						"js"
+					]
+				}
+			}
+		}
+	}
+}

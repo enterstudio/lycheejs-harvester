@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+	<style>
+	@font-face {
+		font-family: 'museo-sans-300';
+		src: url('museo-sans-300.eot');
+		src: url('museo-sans-300.eot?#iefix') format('embedded-opentype'),
+			 url('museo-sans-300.woff2') format('woff2'),
+			 url('museo-sans-300.woff') format('woff'),
+			 url('museo-sans-300.ttf') format('truetype'),
+			 url('museo-sans-300.svg#museo_sans300') format('svg');
+		font-weight: normal;
+		font-style: normal;
+	}
+	body, #logo h1 {
+		margin: 0;
+		padding: 0;
+	}
+	body {
+		color: #efefef;
+		background: #404849;
+		font-family: "museo-sans-300", sans-serif;
+	}
+	#logo {
+		display: block;
+		text-align: center;
+	}
+	article {
+		display: block;
+		margin: 64px auto;
+		padding: 16px;
+		min-width: 256px;
+		max-width: 512px;
+		border: 1px solid #545857;
+	}
+	p {
+		line-height: 150%;
+		text-align: justify;
+	}
+	pre, q {
+		padding: 0.2em 0.5em;
+		background: #303938;
+		border: 1px solid #545857;
+	}
+	pre {
+		overflow: auto;
+	}
+	q::before, q::after {
+		content: '';
+	}
+	</style>
+</head>
+<body>
+	<div id="logo">
+		<img alt="LycheeJS Logo" src="./desktop.svg" width="256">
+		<h1>It works!</h1>
+	</div>
+
+	<article>
+		<p>
+			Sorbet is now up and running, but you missed
+			to configure it properly.
+		</p>
+		<p>
+			Prepare a <q>sorbet.profile</q> file.
+			You can copy/paste the contents of this template
+			and modify the folder paths accordingly to your
+			setup.
+		</p>
+<pre>
+{
+	"port":  8080,
+	"hosts": {
+		"localhost":   "/var/www/website_dev",
+		"example.org": "/var/www/website"
+	}
+}
+</pre>
+		<p>
+			Now restart Sorbet with the created profile.
+			If this installation is portable, replace <q>sorbet</q>
+			with the path to <q>./bin/sorbet.sh</q>.
+		</p>
+<pre>
+sorbet stop;                          # stop this instance
+sorbet start /path/to/sorbet.profile; # start a new instance
+</pre>
+	</article>
+</body>
+</html>
+
