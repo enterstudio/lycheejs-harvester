@@ -20,7 +20,7 @@
 		background: #003366;
 		font-family: sans-serif;
 	}
-	#picture {
+	#wrapper {
 		display: block;
 		margin: 64px auto;
 		text-align: center;
@@ -28,29 +28,22 @@
 	</style>
 </head>
 <body>
-	<h1>To Infinity and Beyond!</h1>
-
-	<div id="picture">
+	<h1>
+		To Infinity and Beyond!
+		<br>
+		<button onclick="benchmark(128)">128</button>
+		<button onclick="benchmark(256)">256</button>
+		<button onclick="benchmark(512)">512</button>
+		<button onclick="benchmark(1024)">1024</button>
+		<button onclick="benchmark(2048)">2048</button>
+		<button onclick="benchmark(4096)">4096</button>
+		<br>
+		<div id="statistics">-</div>
+	</h1>
+	<div id="wrapper">
 		<img alt="Unicorn" src="./unicorn.gif" width="256">
 	</div>
-
-	<script>
-	var picture = document.querySelector('#picture img');
-	if (picture !== null) {
-
-		var width  = window.innerWidth;
-		var height = window.innerHeight;
-
-		if (width > height) {
-			picture.setAttribute('width',  height / 1.2);
-			picture.setAttribute('height', height / 1.2);
-		} else {
-			picture.setAttribute('width',  width  / 1.2);
-			picture.setAttribute('height', width  / 1.2);
-		}
-
-	}
-	</script>
+	<script src="./index.js"></script>
 </body>
 </html>
  
