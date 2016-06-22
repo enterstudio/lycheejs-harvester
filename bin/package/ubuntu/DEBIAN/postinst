@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e;
+
+chmod +x /usr/bin/lycheejs-harvester;
+

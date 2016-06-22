@@ -1,0 +1,10 @@
+Package: lycheejs-harvester
+Version: __VERSION__
+Section: devel
+Priority: optional
+Architecture: __ARCH__
+Installed-Size: __SIZE__
+Depends: curl
+Maintainer: Artificial Engineering <robot@artificial.engineering>
+Description: HTTP/1.1 compliant multiplexed multi-host multi-socket webserver
+
