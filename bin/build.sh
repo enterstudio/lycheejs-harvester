@@ -12,13 +12,7 @@ fi;
 if [ -e "$LYCHEEJS_HELPER" ]; then
 
 	cd $PROJECT_ROOT;
-
-	cp "$PROJECT_ROOT/install.sh" "$PROJECT_ROOT/build/install.sh";
-	cp "$PROJECT_ROOT/favicon.ico" "$PROJECT_ROOT/build/favicon.ico";
-
-	cp -R "$PROJECT_ROOT/asset" "$PROJECT_ROOT/build/asset";
-	cp -R "$PROJECT_ROOT/design" "$PROJECT_ROOT/build/design";
-	cp -R "$PROJECT_ROOT/download" "$PROJECT_ROOT/build/download";
+	"$LYCHEEJS_HELPER" env:node ./bin/build.js;
 
 	echo "SUCCESS";
 	exit 0;
