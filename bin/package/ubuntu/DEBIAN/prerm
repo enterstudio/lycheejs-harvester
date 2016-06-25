@@ -1,4 +1,11 @@
 #!/bin/bash
 
+# This script runs before removal
+
 set -e;
+
+
+if [ -f /usr/bin/lycheejs-harvester ]; then
+	rm /usr/bin/lycheejs-harvester;
+fi;
 

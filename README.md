@@ -79,48 +79,28 @@ lycheejs-fertilizer node/main /projects/lycheejs-harvester;
 
 ## Usage
 
-Use `cd /path/to/www` before to change the website folder.
-Usage is pretty simple, the following commands are implemented:
+Use `cd /path/to/project` to serve the correct project folder.
+If the project folder is a lychee.js Library or Project, it will
+be automatically synchronized with the peer-cloud.
 
-- `lycheejs-harvester start <path/to/profile.json>`
-- `lycheejs-harvester status`
-- `lycheejs-harvester stop`
+If you want to change the Harvester's behaviour, you can use the
+following flags:
+
+- Use `--host` to bind the server to a specific host.
+- Use `--port` to bind the server to a specific port. It is defaulted with `8080`.
+- Use `--debug` to activate debug mode with verbose debug messages.
+- Use `--sandbox` to activate sandbox mode without software bots.
 
 
 
 ## Example
 
 ```bash
-# This will serve the folder /var/www on localhost:8080
+# This will serve the folder /var/www/my-project on artificial.engineering:1337
 
-cd /var/www;
+cd /var/www/my-project;
 
-echo -e "<h1>It works!</h1>" > index.html;
-echo -e "{ "host\":\"localhost\", \"port\":8080 }" > development.json;
-echo -e "{ "host\":\"website.tld\", \"port\":80, \"sandbox\":true }" > production.json;
-
-lycheejs-harvester start ./development.json;
-```
-
-
-
-## Profile
-
-- `host` is a `String`. It is defaulted with `null`.
-- `port` is a `Number`. It is defaulted with `8080`.
-- `debug` is a `Boolean`. It is defaulted with `false`.
-- `sandbox` is a `Boolean`. It is defaulted with `false`.
-
-
-Example:
-
-```json
-{
-	"host":    "website.tld",
-	"port":    8080,
-	"debug":   false,
-	"sandbox": true
-}
+lycheejs-harvester --host=artificial.engineering --port=1337;
 ```
 
 

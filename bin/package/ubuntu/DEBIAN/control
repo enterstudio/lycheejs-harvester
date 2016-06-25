@@ -1,10 +1,12 @@
 Package: lycheejs-harvester
 Version: __VERSION__
-Section: devel
+Section: universe/web
 Priority: optional
 Architecture: __ARCH__
 Installed-Size: __SIZE__
-Depends: curl
+Depends: libc6, libstdc++6
 Maintainer: Artificial Engineering <robot@artificial.engineering>
-Description: HTTP/1.1 compliant multiplexed multi-host multi-socket webserver
+Homepage: https://lychee.js.org
+Bugs: https://github.com/Artificial-Engineering/lycheejs-harvester/issues
+Description: HTTP/1.1 and WS13 compliant multi-host multi-socket peer-synchronized server
 

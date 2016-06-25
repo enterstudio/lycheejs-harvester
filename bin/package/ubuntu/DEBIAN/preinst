@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script is run before installation
+# This script runs before installation
 
 set -e;
 

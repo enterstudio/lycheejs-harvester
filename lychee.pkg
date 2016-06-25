@@ -61,10 +61,10 @@
 	"source": {
 		"environments": {},
 		"files": {
-			"CLI": [
+			"Main": [
 				"js"
 			],
-			"Main": [
+			"inject": [
 				"js"
 			]
 		},
