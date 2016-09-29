@@ -20,7 +20,7 @@ if [ "$GITHUB_TOKEN" != "" ]; then
 
 	release_id=$(cat "$TMP_STATUS" | grep id | cut -d"," -f1 | cut -d":" -f2 | head -1 | tr -d '[[:space:]]');
 
-	if [ "$release_id" != "ValidationFailed" ]; then
+	if [ "$release_id" != "\"ValidationFailed\"" ]; then
 
 		cd $PROJECT_ROOT;
 
