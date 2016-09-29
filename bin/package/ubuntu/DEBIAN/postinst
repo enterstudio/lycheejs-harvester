@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# This script runs after installation
+
+set -e;
+
+if [ -f /usr/bin/lycheejs-harvester ]; then
+	rm /usr/bin/lycheejs-harvester;
+fi;
+
+ln -s /usr/lib/lycheejs-harvester/lycheejs-harvester.sh /usr/bin/lycheejs-harvester;
+chmod +x /usr/bin/lycheejs-harvester;
+chmod +x /usr/lib/lycheejs-harvester/node;
+

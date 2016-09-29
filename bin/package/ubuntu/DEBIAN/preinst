@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# This script runs before installation
+
+set -e;
+
+

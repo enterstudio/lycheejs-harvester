@@ -1,0 +1,73 @@
+{
+	"api": {
+		"files": {}
+	},
+	"build": {
+		"environments": {
+			"node-sdl/main": {
+				"build": "app.Main",
+				"debug": false,
+				"packages": [
+					[
+						"harvester",
+						"/libraries/harvester/lychee.pkg"
+					],
+					[
+						"app",
+						"./lychee.pkg"
+					]
+				],
+				"sandbox": false,
+				"tags": {
+					"platform": [
+						"node-sdl",
+						"node"
+					]
+				},
+				"variant": "application",
+				"profile": {
+					"host": "localhost",
+					"port": 8080
+				}
+			},
+			"node/main": {
+				"build": "app.Main",
+				"debug": false,
+				"packages": [
+					[
+						"harvester",
+						"/libraries/harvester/lychee.pkg"
+					],
+					[
+						"app",
+						"./lychee.pkg"
+					]
+				],
+				"sandbox": false,
+				"tags": {
+					"platform": [
+						"node"
+					]
+				},
+				"variant": "application",
+				"profile": {
+					"host": "localhost",
+					"port": 8080
+				}
+			}
+		},
+		"files": {}
+	},
+	"source": {
+		"environments": {},
+		"files": {
+			"Main": [
+				"js"
+			],
+			"inject": [
+				"js"
+			]
+		},
+		"tags": {}
+	}
+}
