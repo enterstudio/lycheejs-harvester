@@ -1,11 +1,12 @@
 
-let _BOOTUP  = true;
-let _PROFILE = {
+let _BOOTUP    = true;
+const _PROFILE = {
 	"host": "localhost",
 	"port": 8080
 };
 
-let _print_help = function() {
+
+const _print_help = function() {
 
 	console.log('                                                               ');
 	console.info('lychee.js ' + lychee.VERSION + ' Harvester');

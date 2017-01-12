@@ -6,10 +6,10 @@
  * BOOTSTRAP
  */
 
-var _fs   = require('fs');
-var _root = __dirname.split('/').slice(0, 3).join('/');
+const _fs   = require('fs');
+const _ROOT = '/opt/lycheejs';
 
-require(_root + '/libraries/lychee/build/node/core.js')(__dirname.split('/').slice(0, -1).join('/'));
+require(_ROOT + '/libraries/lychee/build/node/core.js')(__dirname.split('/').slice(0, -1).join('/'));
 
 
 
@@ -17,13 +17,13 @@ require(_root + '/libraries/lychee/build/node/core.js')(__dirname.split('/').sli
  * IMPLEMENTATION
  */
 
-var index  = _fs.readFileSync(lychee.ROOT.project + '/build/node/main/index.js').toString('utf8');
-var inject = _fs.readFileSync(lychee.ROOT.project + '/source/inject.js').toString('utf8');
+let index  = _fs.readFileSync(lychee.ROOT.project + '/build/node/main/index.js').toString('utf8');
+let inject = _fs.readFileSync(lychee.ROOT.project + '/source/inject.js').toString('utf8');
 
 
-var tmp = '';
-var i1  = 0;
-var i2  = 0;
+let tmp = '';
+let i1  = 0;
+let i2  = 0;
 
 
 tmp   = inject;
