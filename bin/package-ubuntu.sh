@@ -3,7 +3,6 @@
 LYCHEEJS_ROOT=$(cd "$(dirname "$(readlink -f "$0")")/../../../"; pwd);
 PROJECT_ROOT=$(cd "$(dirname "$(readlink -f "$0")")/../"; pwd);
 PROJECT_VERSION=$(cd $PROJECT_ROOT && cat ./build/node/main/core.js | grep VERSION | cut -d\" -f 2 | cut -d$'\n' -f 1);
-LYCHEEJS_HELPER=`which lycheejs-helper`;
 
 
 build_arch="$1";

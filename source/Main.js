@@ -3,47 +3,28 @@ lychee.define('app.Main').requires([
 	'lychee.Input',
 	'harvester.net.Admin',
 	'harvester.net.Server',
-	'harvester.mod.Fertilizer',
-	'harvester.mod.Packager',
-	'harvester.mod.Server',
-//	'harvester.mod.Strainer',
-	'harvester.mod.Updater'
+	'harvester.Watcher'
 ]).includes([
 	'lychee.event.Emitter'
 ]).exports(function(lychee, global, attachments) {
 
-	const _harvester = lychee.import('harvester');
-	const _mod       = {
-		Fertilizer: lychee.import('harvester.mod.Fertilizer'),
-		Packager:   lychee.import('harvester.mod.Packager'),
-		Server:     lychee.import('harvester.mod.Server'),
-		Strainer:   lychee.import('harvester.mod.Strainer'),
-		Updater:    lychee.import('harvester.mod.Updater')
-	};
-
-
-
-	/*
-	 * HELPERS
-	 */
-
-	const _LIBRARIES  = {};
-	const _PROJECTS   = {};
-	const _PUBLIC_IPS = (function() {
+	const _harvester     = lychee.import('harvester');
+	const _clearInterval = global.clearInterval || function() {};
+	const _setInterval   = global.setInterval;
+	const _Emitter       = lychee.import('lychee.event.Emitter');
+	const _INTERFACES    = (function() {
 
 		let os = null;
 
 		try {
 			os = require('os');
-		} catch(e) {
+		} catch (err) {
 		}
 
 
 		if (os !== null) {
 
-
 			let candidates = [];
-
 
 			Object.values(os.networkInterfaces()).forEach(function(iface) {
 
@@ -63,7 +44,6 @@ lychee.define('app.Main').requires([
 
 			});
 
-
 			return candidates.unique();
 
 		}
@@ -76,17 +56,46 @@ lychee.define('app.Main').requires([
 
 
 	/*
-	 * FEATURE DETECTION
+	 * HELPERS
 	 */
 
-	(function(projects) {
+	const _is_public = function(host) {
 
-		let root = lychee.ROOT.project;
-		if (root !== lychee.ROOT.lychee) {
-			projects[root] = new _harvester.data.Project(root);
+		if (host === '::1' || host === 'localhost') {
+
+			return false;
+
+		} else if (/:/g.test(host) === true) {
+
+			// TODO: Detect private IPv6 ranges?
+
+		} else if (/\./g.test(host) === true) {
+
+			let tmp = host.split('.');
+
+			if (tmp[0] === '10') {
+
+				return false;
+
+			} else if (tmp[0] === '192' && tmp[1] === '168') {
+
+				return false;
+
+			} else if (tmp[0] === '172') {
+
+				let tmp2 = parseInt(tmp[1], 10);
+				if (!isNaN(tmp2) && tmp2 >= 16 && tmp2 <= 31) {
+					return false;
+				}
+
+			}
+
 		}
 
-	})(_PROJECTS);
+
+		return true;
+
+	};
 
 
 
@@ -96,21 +105,19 @@ lychee.define('app.Main').requires([
 
 	let Composite = function(settings) {
 
-		this.settings = Object.assignunlink({
-			host:    null,
-			port:    null,
-			sandbox: false
-		}, settings);
-
-		this.defaults = Object.assignunlink({}, this.settings);
+		this.settings = lychee.assignunlink({ host: null, port: null, sandbox: false }, settings);
+		this.defaults = lychee.assignunlink({}, this.settings);
 
 
-		this.admin  = null;
-		this.server = null;
+		// Updated by Watcher instance
+		this._libraries = {};
+		this._projects  = {};
 
+		this.admin   = null;
+		this.server  = null;
+		this.watcher = new _harvester.Watcher(this);
 
-		this._libraries = _LIBRARIES;
-		this._projects  = _PROJECTS;
+		this.__interval = null;
 
 
 		settings.host    = typeof settings.host === 'string' ? settings.host       : null;
@@ -118,7 +125,7 @@ lychee.define('app.Main').requires([
 		settings.sandbox = settings.sandbox === true;
 
 
-		lychee.event.Emitter.call(this);
+		_Emitter.call(this);
 
 
 
@@ -129,7 +136,7 @@ lychee.define('app.Main').requires([
 		this.bind('load', function() {
 
 			this.admin  = new _harvester.net.Admin({
-				host: 'localhost',
+				host: null,
 				port: 4848
 			});
 
@@ -146,13 +153,31 @@ lychee.define('app.Main').requires([
 			this.server.connect();
 
 
-			console.log('\n\n');
-			console.log('Open your web browser and surf to one of the following hosts:');
+			console.log('\n');
+			console.info('+-------------------------------------------------------+');
+			console.info('| Open one of these URLs with a Blink-based Web Browser |');
+			console.info('+-------------------------------------------------------+');
 			console.log('\n');
 			this.getHosts().forEach(function(host) {
 				console.log(host);
 			});
 			console.log('\n\n');
+
+		}, this, true);
+
+
+		this.bind('init', function() {
+
+			let watcher = this.watcher || null;
+			if (watcher !== null) {
+
+				watcher.init(settings.sandbox);
+
+				this.__interval = _setInterval(function() {
+					watcher.update();
+				}.bind(this), 30000);
+
+			}
 
 		}, this, true);
 
@@ -182,11 +207,11 @@ lychee.define('app.Main').requires([
 
 		serialize: function() {
 
-			let data = lychee.event.Emitter.prototype.serialize.call(this);
-			data['constructor'] = 'harvester.Main';
+			let data = _Emitter.prototype.serialize.call(this);
+			data['constructor'] = 'app.Main';
 
 
-			let settings = Object.assignunlink({}, this.settings);
+			let settings = lychee.assignunlink({}, this.settings);
 			let blob     = data['blob'] || {};
 
 
@@ -217,9 +242,9 @@ lychee.define('app.Main').requires([
 
 		destroy: function() {
 
-			for (let identifier in _PROJECTS) {
+			for (let pid in this._projects) {
 
-				let project = _PROJECTS[identifier];
+				let project = this._projects[pid];
 				if (project.server !== null) {
 
 					if (typeof project.server.destroy === 'function') {
@@ -239,6 +264,11 @@ lychee.define('app.Main').requires([
 			if (this.server !== null) {
 				this.server.disconnect();
 				this.server = null;
+			}
+
+			if (this.__interval !== null) {
+				_clearInterval(this.__interval);
+				this.__interval = null;
 			}
 
 
@@ -263,7 +293,7 @@ lychee.define('app.Main').requires([
 				let port = server.port;
 
 				if (host === null) {
-					hosts.push.apply(hosts, _PUBLIC_IPS);
+					hosts.push.apply(hosts, _INTERFACES);
 					hosts.push('localhost');
 				} else {
 					hosts.push(host);
@@ -272,7 +302,7 @@ lychee.define('app.Main').requires([
 
 				hosts = hosts.map(function(host) {
 
-					if (host.indexOf(':') !== -1) {
+					if (/:/g.test(host)) {
 						return 'http://[' + host + ']:' + port;
 					} else {
 						return 'http://' + host + ':' + port;
@@ -284,6 +314,31 @@ lychee.define('app.Main').requires([
 
 
 			return hosts;
+
+		},
+
+		getNetworks: function() {
+
+			let networks = [];
+			let server   = null;
+
+			if (server !== null) {
+
+				let host = server.host || null;
+				let port = server.port;
+
+				if (_is_public(host) === true) {
+					networks.push((/:/g.test(host) ? '[' + host + ']' : host) + ':' + port);
+				}
+
+				networks.push.apply(networks, _INTERFACES.filter(_is_public).map(function(host) {
+					return (/:/g.test(host) ? '[' + host + ']' : host) + ':' + port;
+				}));
+
+			}
+
+
+			return networks;
 
 		}
 

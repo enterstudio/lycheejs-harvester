@@ -1,12 +1,12 @@
 #!/bin/bash
 
-LYCHEEJS_ROOT=$(cd "$(dirname "$(readlink -f "$0")")/../../../"; pwd);
-PROJECT_ROOT=$(cd "$(dirname "$(readlink -f "$0")")/../"; pwd);
-LYCHEEJS_HELPER=`which lycheejs-helper`;
-
-if [ "$LYCHEEJS_HELPER" == "" ]; then
-	LYCHEEJS_HELPER="$LYCHEEJS_ROOT/bin/helper.sh";
+if [ -z "$LYCHEEJS_ROOT" ]; then
+	LYCHEEJS_ROOT=$(cd "$(dirname "$(readlink -f "$0")")/../../../"; pwd);
 fi;
+
+
+PROJECT_ROOT=$(cd "$(dirname "$(readlink -f "$0")")/../"; pwd);
+LYCHEEJS_HELPER="$LYCHEEJS_ROOT/bin/helper.sh";
 
 
 if [ -e "$LYCHEEJS_HELPER" ]; then
